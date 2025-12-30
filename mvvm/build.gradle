@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+android {
+    namespace 'com.guangnian.mvvm'
+    compileSdk = 36
+
+    defaultConfig {
+        minSdkVersion 23
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-mvvm.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility =JavaVersion.VERSION_17
+        targetCompatibility =JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            // res 资源目录配置
+            res.srcDirs(
+                    'src/main/res',
+                    'src/main/res-sw',
+            )
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation libs.androidx.appcompat.v161
+    //kotlin
+    implementation libs.androidx.core.ktx.v1120
+    //lifecycle
+    api libs.androidx.lifecycle.runtime.ktx
+    api libs.androidx.lifecycle.common.java8
+    api libs.androidx.lifecycle.extensions
+    // viewModel
+    api libs.androidx.lifecycle.viewmodel.ktx
+    api libs.androidx.fragment.ktx
+    // liveData
+    api libs.androidx.lifecycle.livedata.ktx
+    api libs.unpeek.livedata
+    //navigation
+    api libs.androidx.navigation.fragment.ktx
+    api libs.androidx.navigation.ui.ktx
+    //retrofit
+    api libs.retrofit
+    api libs.converter.gson
+    api libs.persistentcookiejar
+    //动态替换BaseUrl库 使用可参考 https://github.com/JessYanCoding/RetrofitUrlManager
+    api libs.retrofit.url.manager
+}
