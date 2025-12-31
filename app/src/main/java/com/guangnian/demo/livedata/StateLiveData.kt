@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.google.gson.JsonSyntaxException
+import com.guangnian.demo.livedata.StateLiveData.getEntity
 import com.guangnian.mvvm.callback.unlive.keyvalue.domain.dispatch.UnliveData
 import com.guangnian.mvvm.callback.unlive.keyvalue.domain.event.KeyValueMsg
 import com.hjq.gson.factory.GsonFactory
@@ -41,13 +42,13 @@ object StateLiveData {
             return cached as T
         }
 
-        val json = UnliveData.mKeyValueDispatcher.mMKUtils.getString(key, "")
+        val json = UnliveData.mKeyValueDispatcher.mSPUtils.getString(key, "")
 
-        if (type == String::class.java) return UnliveData.mKeyValueDispatcher.mMKUtils.getString(key, "") as T?
-        if (type == Int::class.javaObjectType || type == Int::class.java) return UnliveData.mKeyValueDispatcher.mMKUtils.getInt(key, 0) as T?
-        if (type == Boolean::class.javaObjectType || type == Boolean::class.java) return UnliveData.mKeyValueDispatcher.mMKUtils.getBoolean(key, false) as T?
-        if (type == Float::class.javaObjectType || type == Float::class.java) return UnliveData.mKeyValueDispatcher.mMKUtils.getFloat(key, 0f) as T?
-        if (type == Long::class.javaObjectType || type == Long::class.java) return UnliveData.mKeyValueDispatcher.mMKUtils.getLong(key, 0L) as T?
+        if (type == String::class.java) return UnliveData.mKeyValueDispatcher.mSPUtils.getString(key, "") as T?
+        if (type == Int::class.javaObjectType || type == Int::class.java) return UnliveData.mKeyValueDispatcher.mSPUtils.getInt(key, 0) as T?
+        if (type == Boolean::class.javaObjectType || type == Boolean::class.java) return UnliveData.mKeyValueDispatcher.mSPUtils.getBoolean(key, false) as T?
+        if (type == Float::class.javaObjectType || type == Float::class.java) return UnliveData.mKeyValueDispatcher.mSPUtils.getFloat(key, 0f) as T?
+        if (type == Long::class.javaObjectType || type == Long::class.java) return UnliveData.mKeyValueDispatcher.mSPUtils.getLong(key, 0L) as T?
 
         // 剩下的认为是实体类，走 Gson 解析
         if (json.isNotEmpty()) {

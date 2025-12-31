@@ -43,7 +43,6 @@ android {
 
 dependencies {
     implementation(project(":mvvm"))
-    implementation(files("libs/GsonFactory-9.2.aar"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -53,4 +52,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.gsonfactory)
 }
