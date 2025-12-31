@@ -61,4 +61,5 @@ dependencies {
     api libs.persistentcookiejar
     //动态替换BaseUrl库 使用可参考 https://github.com/JessYanCoding/RetrofitUrlManager
     api libs.retrofit.url.manager
+    implementation libs.mmkv
 }

@@ -11,6 +11,9 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.guangnian.mvvm.ext.lifecycle.KtxAppLifeObserver
 import com.guangnian.mvvm.ext.lifecycle.KtxLifeCycleCallBack
 import com.guangnian.mvvm.network.manager.NetworkStateReceive
+import com.tencent.mmkv.MMKV
+
+
 
 /**
  * 作者　: GuangNian
@@ -32,6 +35,10 @@ class Ktx : ContentProvider() {
     override fun onCreate(): Boolean {
         val application = context!!.applicationContext as Application
         install(application)
+
+        val rootDir: String? = MMKV.initialize(application)
+        println("mmkv root: " + rootDir)
+
         return true
     }
 

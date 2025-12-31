@@ -1,8 +1,7 @@
 package com.guangnian.mvvm.callback.unlive.keyvalue.domain.dispatch
 
-import com.google.gson.JsonSyntaxException
 import com.guangnian.mvvm.callback.unlive.keyvalue.domain.event.KeyValueMsg
-import com.guangnian.mvvm.callback.unlive.keyvalue.utils.SPUtils
+import com.guangnian.mvvm.callback.unlive.keyvalue.utils.MKUtils
 import com.guangnian.mvvm.callback.unlive.mvi.domain.dispatch.MviDispatcher
 import java.util.HashMap
 
@@ -16,7 +15,7 @@ import java.util.HashMap
  */
 open class KeyValueDispatcher : MviDispatcher<KeyValueMsg>() {
     val keyValues = HashMap<String, Any>()
-    val mSPUtils: SPUtils = SPUtils.getInstance(moduleName())
+    val mMKUtils: MKUtils = MKUtils.getInstance(moduleName())
 
     open fun moduleName(): String {
         return "GlobalConfigs"
@@ -26,67 +25,73 @@ open class KeyValueDispatcher : MviDispatcher<KeyValueMsg>() {
         sendResult(intent)
     }
 
+    fun put(key: String, value: Any) {
+        keyValues[key] = value
+        mMKUtils.put(key, value)
+        input(KeyValueMsg(key))
+    }
+
     fun put(key: String, value: String) {
         keyValues[key] = value
-        mSPUtils.put(key, value)
+        mMKUtils.put(key, value)
         input(KeyValueMsg(key))
     }
 
     fun put(key: String, value: Int) {
         keyValues[key] = value
-        mSPUtils.put(key, value)
+        mMKUtils.put(key, value)
         input(KeyValueMsg(key))
     }
 
     fun put(key: String, value: Long) {
         keyValues[key] = value
-        mSPUtils.put(key, value)
+        mMKUtils.put(key, value)
         input(KeyValueMsg(key))
     }
 
     fun put(key: String, value: Float) {
         keyValues[key] = value
-        mSPUtils.put(key, value)
+        mMKUtils.put(key, value)
         input(KeyValueMsg(key))
     }
 
     fun put(key: String, value: Boolean) {
         keyValues[key] = value
-        mSPUtils.put(key, value)
+        mMKUtils.put(key, value)
         input(KeyValueMsg(key))
     }
 
     fun getString(key: String): String {
         if (keyValues[key] == null) {
-            keyValues[key] = mSPUtils.getString(key, "")
+            keyValues[key] = mMKUtils.getString(key, "")
         }
         return keyValues[key] as String
     }
 
     fun getInt(key: String): Int {
         if (keyValues[key] == null) {
-            keyValues[key] = mSPUtils.getInt(key, 0)
+            keyValues[key] = mMKUtils.getInt(key, 0)
         }
         return keyValues[key] as Int
     }
 
     fun getLong(key: String): Long {
         if (keyValues[key] == null) {
-            keyValues[key] = mSPUtils.getLong(key, 0L)
+            keyValues[key] = mMKUtils.getLong(key, 0L)
         }
         return keyValues[key] as Long
     }
 
     fun getFloat(key: String): Float {
         if (keyValues[key] == null) {
-            keyValues[key] = mSPUtils.getFloat(key, 0f)
+            keyValues[key] = mMKUtils.getFloat(key, 0f)
         }
         return keyValues[key] as Float
     }
 
     fun getBoolean(key: String): Boolean {
         if (keyValues[key] == null) {
-            keyValues[key] = mSPUtils.getBoolean(key, false)
+            keyValues[key] = mMKUtils.getBoolean(key, false)
         }
         return keyValues[key] as Boolean
     }
