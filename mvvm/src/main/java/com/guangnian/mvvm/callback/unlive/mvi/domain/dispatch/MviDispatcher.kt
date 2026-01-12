@@ -1,5 +1,7 @@
 package com.guangnian.mvvm.callback.unlive.mvi.domain.dispatch
 
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -20,6 +22,7 @@ open class MviDispatcher<T> : ViewModel(), DefaultLifecycleObserver {
     private val mFragmentOwner = HashMap<Int, LifecycleOwner>()
     private val mObservers = HashMap<Int, Observer<T>>()
     private val mResults = FixedLengthList<OneTimeMessage<T>>()
+    private val mMainHandler = Handler(Looper.getMainLooper())
 
     protected open fun initQueueMaxLength(): Int {
         return DEFAULT_QUEUE_LENGTH
@@ -87,8 +90,17 @@ open class MviDispatcher<T> : ViewModel(), DefaultLifecycleObserver {
         result?.set(intent)
     }
 
+    //增加线程检查
     fun input(intent: T) {
-        onHandle(intent)
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            // 如果是主线程，直接处理
+            onHandle(intent)
+        } else {
+            // 如果是子线程，Post 到主线程处理
+            mMainHandler.post {
+                onHandle(intent)
+            }
+        }
     }
 
     protected open fun onHandle(intent: T) {

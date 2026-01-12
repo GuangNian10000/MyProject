@@ -2,6 +2,7 @@ package com.guangnian.mvvm.callback.unlive.keyvalue.domain.dispatch
 
 import com.google.gson.JsonSyntaxException
 import com.guangnian.mvvm.callback.unlive.keyvalue.domain.event.KeyValueMsg
+import com.guangnian.mvvm.callback.unlive.keyvalue.utils.MKUtils
 import com.guangnian.mvvm.callback.unlive.keyvalue.utils.SPUtils
 import com.guangnian.mvvm.callback.unlive.mvi.domain.dispatch.MviDispatcher
 import java.util.HashMap
@@ -16,7 +17,7 @@ import java.util.HashMap
  */
 open class KeyValueDispatcher : MviDispatcher<KeyValueMsg>() {
     val keyValues = HashMap<String, Any>()
-    val mSPUtils: SPUtils = SPUtils.getInstance(moduleName())
+    val mSPUtils: MKUtils = MKUtils.getInstance(moduleName())
 
     open fun moduleName(): String {
         return "GlobalConfigs"

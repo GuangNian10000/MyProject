@@ -69,8 +69,9 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     /**
      * 创建viewModel
      */
+    @Suppress("UNCHECKED_CAST") // 忽略警告
     private fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
+        return ViewModelProvider(this)[getVmClazz(this) as Class<VM>]
     }
 
     /**

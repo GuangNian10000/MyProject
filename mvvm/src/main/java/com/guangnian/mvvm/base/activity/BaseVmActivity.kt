@@ -92,8 +92,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), Activit
     /**
      * 创建viewModel
      */
+    @Suppress("UNCHECKED_CAST") // 忽略警告
     private fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
+        return ViewModelProvider(this)[getVmClazz(this) as Class<VM>]
     }
 
     /**
@@ -164,7 +165,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), Activit
     /**
      * 如果当前的 Activity（singleTop 启动模式） 被复用时会回调
      */
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         // 设置为当前的 Intent，避免 Activity 被杀死后重启 Intent 还是最原先的那个
         setIntent(intent)
@@ -189,7 +190,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), Activit
         return super<AppCompatActivity>.startActivity(intent)
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         val fragments: MutableList<Fragment?> = supportFragmentManager.fragments
         for (fragment: Fragment? in fragments) {
             // 这个 Fragment 必须是 BaseFragment 的子类，并且处于可见状态

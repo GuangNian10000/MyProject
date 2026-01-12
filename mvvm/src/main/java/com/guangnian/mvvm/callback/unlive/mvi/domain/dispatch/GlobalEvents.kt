@@ -14,6 +14,11 @@ import androidx.lifecycle.Observer
  */
 object GlobalEvents : MviDispatcher<Any>() {
 
+    // 【新增修复代码】必须重写此方法，将事件分发出去
+    override fun onHandle(intent: Any) {
+        sendResult(intent)
+    }
+
     /**
      * 发送事件
      * @param event 任意对象 (建议使用 Sealed Class 或 Data Class)
