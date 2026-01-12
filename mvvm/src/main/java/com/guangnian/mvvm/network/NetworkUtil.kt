@@ -1,46 +1,48 @@
-package com.guangnian.mvvm.network;
+package com.guangnian.mvvm.network
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.telephony.TelephonyManager;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.URL;
-import java.util.Enumeration;
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.telephony.TelephonyManager
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.net.SocketException
+import java.net.URL
+import java.util.Enumeration
 
 /**
  * @author : gn
  * @date   : 2020/6/11
  */
+object NetworkUtil {
+    var url = "http://www.baidu.com"
 
-public class NetworkUtil {
-    public static String url = "http://www.baidu.com";
     /**
      * NetworkAvailable
      */
-    public static int NET_CNNT_BAIDU_OK = 1;
+    const val NET_CNNT_BAIDU_OK = 1
+
     /**
      * no NetworkAvailable
      */
-    public static int NET_CNNT_BAIDU_TIMEOUT = 2;
+    const val NET_CNNT_BAIDU_TIMEOUT = 2
+
     /**
      * Net no ready
      */
-    public static int NET_NOT_PREPARE = 3;
+    const val NET_NOT_PREPARE = 3
+
     /**
      * net error
      */
-    public static int NET_ERROR = 4;
+    const val NET_ERROR = 4
+
     /**
      * TIMEOUT
      */
-    private static int TIMEOUT = 3000;
-
+    private const val TIMEOUT = 3000
 
     /**
      * check NetworkAvailable
@@ -48,14 +50,12 @@ public class NetworkUtil {
      * @param context
      * @return
      */
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext().getSystemService(
-                Context.CONNECTIVITY_SERVICE);
-        if (null == manager) {
-            return false;
-        }
-        NetworkInfo info = manager.getActiveNetworkInfo();
-        return null != info && info.isAvailable();
+    @JvmStatic
+    fun isNetworkAvailable(context: Context): Boolean {
+        val manager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+            ?: return false
+        val info = manager.activeNetworkInfo
+        return info != null && info.isAvailable
     }
 
     /**
@@ -63,22 +63,25 @@ public class NetworkUtil {
      *
      * @return
      */
-    public static String getLocalIpAddress() {
-        String ret = "";
+    @JvmStatic
+    fun getLocalIpAddress(): String {
+        var ret = ""
         try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress()) {
-                        ret = inetAddress.getHostAddress().toString();
+            val en = NetworkInterface.getNetworkInterfaces()
+            while (en.hasMoreElements()) {
+                val intf = en.nextElement()
+                val enumIpAddr = intf.inetAddresses
+                while (enumIpAddr.hasMoreElements()) {
+                    val inetAddress = enumIpAddr.nextElement()
+                    if (!inetAddress.isLoopbackAddress) {
+                        ret = inetAddress.hostAddress?.toString() ?: ""
                     }
                 }
             }
-        } catch (SocketException ex) {
-            ex.printStackTrace();
+        } catch (ex: SocketException) {
+            ex.printStackTrace()
         }
-        return ret;
+        return ret
     }
 
     /**
@@ -87,28 +90,28 @@ public class NetworkUtil {
      * @param context
      * @return
      */
-    public static int getNetState(Context context) {
+    @JvmStatic
+    fun getNetState(context: Context): Int {
         try {
-            ConnectivityManager connectivity = (ConnectivityManager) context
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            val connectivity = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             if (connectivity != null) {
-                NetworkInfo networkinfo = connectivity.getActiveNetworkInfo();
+                val networkinfo = connectivity.activeNetworkInfo
                 if (networkinfo != null) {
-                    if (networkinfo.isAvailable() && networkinfo.isConnected()) {
+                    return if (networkinfo.isAvailable && networkinfo.isConnected) {
                         if (!connectionNetwork()) {
-                            return NET_CNNT_BAIDU_TIMEOUT;
+                            NET_CNNT_BAIDU_TIMEOUT
                         } else {
-                            return NET_CNNT_BAIDU_OK;
+                            NET_CNNT_BAIDU_OK
                         }
                     } else {
-                        return NET_NOT_PREPARE;
+                        NET_NOT_PREPARE
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        return NET_ERROR;
+        return NET_ERROR
     }
 
     /**
@@ -116,23 +119,20 @@ public class NetworkUtil {
      *
      * @return
      */
-    static private boolean connectionNetwork() {
-        boolean result = false;
-        HttpURLConnection httpUrl = null;
+    private fun connectionNetwork(): Boolean {
+        var result = false
+        var httpUrl: HttpURLConnection? = null
         try {
-            httpUrl = (HttpURLConnection) new URL(url)
-                    .openConnection();
-            httpUrl.setConnectTimeout(TIMEOUT);
-            httpUrl.connect();
-            result = true;
-        } catch (IOException e) {
+            httpUrl = URL(url).openConnection() as HttpURLConnection
+            httpUrl.connectTimeout = TIMEOUT
+            httpUrl.connect()
+            result = true
+        } catch (e: IOException) {
+            // ignore
         } finally {
-            if (null != httpUrl) {
-                httpUrl.disconnect();
-            }
-            httpUrl = null;
+            httpUrl?.disconnect()
         }
-        return result;
+        return result
     }
 
     /**
@@ -141,15 +141,11 @@ public class NetworkUtil {
      * @param context
      * @return boolean
      */
-    public static boolean is3G(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && activeNetInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-            return true;
-        }
-        return false;
+    @JvmStatic
+    fun is3G(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetInfo = connectivityManager.activeNetworkInfo
+        return activeNetInfo != null && activeNetInfo.type == ConnectivityManager.TYPE_MOBILE
     }
 
     /**
@@ -158,15 +154,11 @@ public class NetworkUtil {
      * @param context
      * @return boolean
      */
-    public static boolean isWifi(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
-        }
-        return false;
+    @JvmStatic
+    fun isWifi(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetInfo = connectivityManager.activeNetworkInfo
+        return activeNetInfo != null && activeNetInfo.type == ConnectivityManager.TYPE_WIFI
     }
 
     /**
@@ -175,18 +167,12 @@ public class NetworkUtil {
      * @param context
      * @return boolean
      */
-    public static boolean is2G(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && (activeNetInfo.getSubtype() == TelephonyManager.NETWORK_TYPE_EDGE
-                || activeNetInfo.getSubtype() == TelephonyManager.NETWORK_TYPE_GPRS || activeNetInfo
-                .getSubtype() == TelephonyManager.NETWORK_TYPE_CDMA)) {
-            return true;
-        }
-        return false;
+    @JvmStatic
+    fun is2G(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetInfo = connectivityManager.activeNetworkInfo
+        return activeNetInfo != null && (activeNetInfo.subtype == TelephonyManager.NETWORK_TYPE_EDGE
+                || activeNetInfo.subtype == TelephonyManager.NETWORK_TYPE_GPRS
+                || activeNetInfo.subtype == TelephonyManager.NETWORK_TYPE_CDMA)
     }
-
-
 }

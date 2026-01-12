@@ -1,7 +1,7 @@
-package com.guangnian.mvvm.util;
+package com.guangnian.mvvm.util
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.StateListDrawable
 
 /**
  * GuangNian
@@ -10,19 +10,15 @@ import android.graphics.drawable.StateListDrawable;
  * 只需要复制核心类 ProxyDrawable，Drawables至项目中即可
  * 可以减少大量的drawable.xml文件
  */
-public class ProxyDrawable extends StateListDrawable {
+class ProxyDrawable : StateListDrawable() {
 
-    private Drawable originDrawable;
+    var originDrawable: Drawable? = null
+        private set
 
-    @Override
-    public void addState(int[] stateSet, Drawable drawable) {
-        if (stateSet != null && stateSet.length == 1 && stateSet[0] == 0) {
-            originDrawable = drawable;
+    override fun addState(stateSet: IntArray, drawable: Drawable) {
+        if (stateSet.size == 1 && stateSet[0] == 0) {
+            originDrawable = drawable
         }
-        super.addState(stateSet, drawable);
-    }
-
-    Drawable getOriginDrawable() {
-        return originDrawable;
+        super.addState(stateSet, drawable)
     }
 }
