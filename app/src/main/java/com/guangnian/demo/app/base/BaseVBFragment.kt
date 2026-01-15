@@ -1,8 +1,10 @@
-package com.guangnian.demo.base
+package com.guangnian.demo.app.base
 
 import android.os.Bundle
-import androidx.databinding.ViewDataBinding
-import com.guangnian.mvvm.base.fragment.BaseVmDbFragment
+import androidx.viewbinding.ViewBinding
+import com.guangnian.demo.app.ext.dismissLoadingExt
+import com.guangnian.demo.app.ext.showLoadingExt
+import com.guangnian.mvvm.base.fragment.BaseVmVbFragment
 import com.guangnian.mvvm.base.viewmodel.BaseViewModel
 
 /**
@@ -12,8 +14,7 @@ import com.guangnian.mvvm.base.viewmodel.BaseViewModel
  * BaseVmFragment例如
  * abstract class BaseFragment<VM : BaseViewModel> : BaseVmFragment<VM>() {
  */
-abstract class BaseFragment2<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDbFragment<VM, DB>() {
-
+abstract class BaseVBFragment<VM : BaseViewModel, VB : ViewBinding> : BaseVmVbFragment<VM, VB>() {
 
     abstract override fun initView(savedInstanceState: Bundle?)
 
@@ -34,18 +35,26 @@ abstract class BaseFragment2<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmD
 
     }
 
+    open fun onViewPagerPageSelected() {
+        // 当 Fragment 所在页面被选中时执行的操作
+    }
+
+    open fun onViewPagerPageDeselected() {
+        // 当 Fragment 即将被隐藏时执行的操作
+    }
+
     /**
      * 打开等待框
      */
     override fun showLoading(message: String) {
-        //showLoadingExt(message)
+        showLoadingExt(message)
     }
 
     /**
      * 关闭等待框
      */
     override fun dismissLoading() {
-        //dismissLoadingExt()
+        dismissLoadingExt()
     }
 
     override fun onPause() {

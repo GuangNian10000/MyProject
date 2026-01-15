@@ -1,5 +1,6 @@
 package com.guangnian.demo.livedata
 
+import com.guangnian.demo.livedata.StateLiveData.getEntity
 import com.guangnian.mvvm.callback.unlive.keyvalue.domain.dispatch.UnliveData
 import com.hjq.gson.factory.GsonFactory
 import kotlin.properties.ReadWriteProperty
@@ -9,7 +10,7 @@ import kotlin.reflect.KProperty
  * @since 2026/1/12
  * @summary 属性委托类：将属性读写桥接到 UnliveData
  */
-class UnliveDelegate<T>(
+class EventLiveData<T>(
     private val defaultValue: T,
     private val type: Class<T>
 ) : ReadWriteProperty<Any?, T> {
@@ -19,7 +20,7 @@ class UnliveDelegate<T>(
      * */
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
         val key = property.name
-        val cached = StateLiveData.getEntity(key, type)
+        val cached = getEntity(key, type)
 
         if (cached == null) {
             // 如果没值，不仅返回默认值，还顺手存进去（初始化）
@@ -46,9 +47,4 @@ class UnliveDelegate<T>(
             }
         }
     }
-}
-
-// 扩展函数：简化委托的创建语法
-inline fun <reified T> unlive(defaultValue: T): UnliveDelegate<T> {
-    return UnliveDelegate(defaultValue, T::class.java)
 }

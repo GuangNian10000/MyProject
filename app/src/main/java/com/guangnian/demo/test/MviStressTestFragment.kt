@@ -1,4 +1,4 @@
-package com.guangnian.demo
+package com.guangnian.demo.test
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -22,7 +22,7 @@ import java.util.Date
 import java.util.Locale
 
 /**
- * MVI 框架一键综合测试页 (修复版)
+ * MVI 框架一键综合测试页 
  */
 class MviStressTestFragment : Fragment() {
 

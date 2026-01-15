@@ -1,0 +1,182 @@
+<resources>
+    <declare-styleable name="BaseStyles">
+        <attr name="mTheme" format="string" />  <!--是否需要主题-->
+        <attr name="mActive" format="boolean" />  <!--开关-->
+        <attr name="sizeWeight"><!--粗细-->
+            <flag name="bold" value="2" />
+            <flag name="medium" value="1" />
+            <flag name="regular" value="0" />
+        </attr>
+
+        <attr name="shadowBgNight" format="color" /> <!--阴影夜间-->
+
+        <attr name="extraTextColor" format="reference|color"/> <!--额外的颜色-->
+        <attr name="extraTextColorNight" format="reference|color"/>
+        <attr name="extraActive" format="boolean" />
+
+        <attr name="customProgressSeekBar" format="reference|color"/> <!--进度条颜色-->
+        <attr name="customBackgroundSeekBar" format="reference|color"/> <!--进度条颜色-->
+
+        <attr name="innerColor" format="color" /> <!--选择纸张色 内圈颜色-->
+        <attr name="borderInnerColor" format="color" /> <!--选择纸张色 外圈颜色-->
+        <!--未选中时-->
+            <!--夜间-->
+            <attr name="extraColorNight" format="color" />
+
+            <attr name="textColorNight" format="color"/>
+            <attr name="bgColorNight" format="color"/>
+            <attr name="drawableNight" format="reference"/>
+            <attr name="imgNight" format="reference"/>
+            <attr name="textColorHintNight" format="color"/>
+
+        <!--选中时-->
+            <!--日间-->
+            <attr name="extraColor" format="color" />
+
+            <attr name="activeSizeColor" format="reference|color"/> <!--字体-->
+            <attr name="activeBgColor" format="reference|color"/> <!--背景颜色-->
+            <attr name="activeDrawable" format="reference|color"/> <!--背景-->
+            <attr name="activeImg" format="reference"/> <!--图片-->
+
+            <!--夜间-->
+            <attr name="activeSizeColorNight" format="color"/>
+            <attr name="activeBgColorNight" format="color"/>
+            <attr name="activeDrawableNight" format="reference"/>
+            <attr name="activeImgNight" format="reference"/>
+
+
+    </declare-styleable>
+
+    <declare-styleable name="NightAttrs">
+        <!--夜间-->
+        <attr name="nightBackgroundColor" format="reference|color" />
+        <attr name="nightBackground" format="reference" />
+        <attr name="nightTextSize" format="dimension" />
+        <attr name="nightTextColor" format="reference|color" />
+        <attr name="nightSrc" format="reference|color" />
+
+        <!--选中-->
+        <attr name="currentTextColor" format="color" /> <!--选中时字体颜色-->
+        <attr name="nightCurrentTextColor" format="color" /><!--夜间-->
+
+        <attr name="currentBackground" format="reference" /> <!--选中时背景-->
+        <attr name="nightCurrentBackground" format="reference" /> <!--夜间-->
+    </declare-styleable>
+
+    <declare-styleable name="NightImageStateView">
+
+        <attr name="mSwitch" format="boolean" />
+        <!--开关时的图片-->
+        <attr name="onImage" format="reference" />
+        <attr name="offImage" format="reference" />
+
+        <attr name="onImageNight" format="reference" />
+        <attr name="offImageNight" format="reference" />
+    </declare-styleable>
+
+    <style name="ActionSheetStyle" parent="@android:style/Theme.Dialog">
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/ActionSheetAnimation</item>
+    </style>
+
+    <style name="ActionSheetAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/actionsheet_in</item>
+        <item name="android:windowExitAnimation">@anim/actionsheet_out</item>
+    </style>
+
+    <declare-styleable name="VerticalTextView">
+        <attr name="textColors" format="color|reference"/>
+        <attr name="hintColor" format="color|reference"/>
+        <attr name="textSizes" format="dimension|reference"/>
+        <attr name="text" format="string|reference"/>
+        <attr name="hint" format="string|reference"/>
+        <attr name="lineSpaces" format="dimension|reference"/>
+        <attr name="wordSpace" format="dimension|reference"/>
+        <attr name="gravity">
+            <!-- 文字从左至右排版 -->
+            <flag name="l2r" value="0" />
+            <!-- 文字从右至左排版 -->
+            <flag name="r2l" value="1" />
+        </attr>
+        <!-- 固定文字个数 -->
+        <attr name="fixSize" format="integer"/>
+        <!-- 字体 -->
+        <attr name="typeface" format="string"/>
+        <!-- 是否去掉字体自带的内边距 -->
+        <attr name="includeFontPadding" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="ExpandTextView">
+        <!--  文本颜色  -->
+        <attr name="textColor" format="color|reference"/>
+        <!--  最大显示文本行数  -->
+        <attr name="maxLines" format="integer|reference"/>
+        <!--  文本字体大小  -->
+        <attr name="textSize" format="dimension|reference"/>
+        <!--  动画显示时间 -->
+        <attr name="animDuration" format="integer|reference"/>
+        <!--  提示图标的宽度  -->
+        <attr name="drawableWidth" format="dimension|reference"/>
+        <!--  提示图标的高度  -->
+        <attr name="drawableHeight" format="dimension|reference"/>
+        <!--  展开时候的提示图标  -->
+        <attr name="expandDrawable" format="color|reference"/>
+        <!--  收缩收起时候的提示图标  -->
+        <attr name="shrinkDrawable" format="color|reference"/>
+
+        <attr name="exTextColorNight" format="color|reference"/>
+        <attr name="shrinkDrawableNight" format="color|reference"/>
+        <attr name="expandDrawableNight" format="color|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="JustifyTextView">
+        <attr name="lineSpacing" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundPointView">
+        <attr name="visView" format="boolean" />
+<!--        <attr name="bgPoint" format="color" />-->
+    </declare-styleable>
+
+    <declare-styleable name="ShadowGroup">
+        <attr name="shadowDX" format="dimension" />
+        <attr name="shadowDY" format="dimension" />
+        <attr name="shadowColor" format="color" />
+        <attr name="shadowRadius" format="dimension" />
+        <attr name="shadowMaxHeight" format="dimension" />
+        <attr name="shadowBgColor" format="color" />
+        <attr name="shadowIndicatorMargin" format="float" />
+        <attr name="shadowIndicatorOrientation" format="enum">
+            <enum name="top" value="0" />
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+
+        <attr name="shadowBgColorNight" format="color" />
+        <attr name="bgNight" format="color" />
+    </declare-styleable>
+
+    <string-array name="voicer_cloud_the_speed">
+        <item>0.5x</item>
+        <item>0.75x</item>
+        <item>1x</item>
+        <item>1.5x</item>
+        <item>2x</item>
+        <item>2.5x</item>
+        <item>3x</item>
+    </string-array>
+</resources>

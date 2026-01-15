@@ -3,8 +3,6 @@ package com.guangnian.demo.livedata
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import com.google.gson.JsonSyntaxException
-import com.guangnian.demo.livedata.StateLiveData.getEntity
 import com.guangnian.mvvm.callback.unlive.keyvalue.domain.dispatch.UnliveData
 import com.guangnian.mvvm.callback.unlive.keyvalue.domain.event.KeyValueMsg
 import com.hjq.gson.factory.GsonFactory
@@ -15,7 +13,6 @@ import com.hjq.gson.factory.GsonFactory
  * @summary
  */
 object StateLiveData {
-
     /**
      * 支持直接传入 KProperty (例如 EventLiveConfig::userName)
      * 自动推导 key (变量名) 和 type (属性类型)
@@ -58,6 +55,11 @@ object StateLiveData {
             is AppCompatActivity -> UnliveData.output(content,callback)
             is Fragment ->  UnliveData.output(content,callback)
         }
+    }
+
+    // 扩展函数：简化委托的创建语法
+    inline fun <reified T> unlive(defaultValue: T): EventLiveData<T> {
+        return EventLiveData(defaultValue, T::class.java)
     }
 
     /**
@@ -122,5 +124,4 @@ object StateLiveData {
         }
         return null
     }
-
 }

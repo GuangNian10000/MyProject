@@ -60,7 +60,18 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.gsonfactory)
 
+    implementation(libs.material)
+    //dialog
+    implementation("com.afollestad.material-dialogs:lifecycle:3.3.0")
+    implementation("com.afollestad.material-dialogs:core:3.3.0")
+    implementation("com.afollestad.material-dialogs:color:3.3.0")
+    implementation("com.afollestad.material-dialogs:datetime:3.3.0")
+    implementation("com.afollestad.material-dialogs:bottomsheets:3.3.0")
+
     // 3.1.1以上版本无需混淆
     implementation("com.geyifeng.immersionbar:immersionbar:3.2.2")
     implementation("com.geyifeng.immersionbar:immersionbar-ktx:3.2.2")
+
+    //微信开源 https://github.com/Tencent/MMKV/blob/master/README_CN.md
+    implementation("com.tencent:mmkv:2.3.0")
 }

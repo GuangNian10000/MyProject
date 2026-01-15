@@ -1,22 +1,25 @@
-package com.guangnian.demo.base
+package com.guangnian.demo.app.base
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.databinding.ViewDataBinding
+import android.view.View
+import androidx.viewbinding.ViewBinding
+import com.guangnian.demo.app.ext.showLoadingExt
 import com.guangnian.mvvm.R
-import com.guangnian.mvvm.base.activity.BaseVmDbActivity
+import com.guangnian.mvvm.base.activity.BaseVmVbActivity
 import com.guangnian.mvvm.base.viewmodel.BaseViewModel
 import com.gyf.immersionbar.ImmersionBar
-
 
 /**
  * 时间　: 2019/12/21
  * 作者　: hegaojian
- * 描述　: 你项目中的Activity基类，在这里实现显示弹窗，吐司，还有加入自己的需求操作 ，如果不想用Databind，请继承
+ * 描述　: 你项目中的Activity基类，在这里实现显示弹窗，吐司，还有加入自己的需求操作 ，如果不想用 Databind，请继承
  * BaseVmActivity例如
  * abstract class BaseActivity<VM : BaseViewModel> : BaseVmActivity<VM>() {
  */
-abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDbActivity<VM, DB>() {
+abstract class BaseVBActivity<VM : BaseViewModel, VB : ViewBinding> : BaseVmVbActivity<VM, VB>(),
+    View.OnClickListener {
+
     /** 状态栏沉浸 */
     private var immersionBar: ImmersionBar? = null
     abstract override fun initView(savedInstanceState: Bundle?)
@@ -29,6 +32,13 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
         }
     }
 
+    override fun onClick(view: View) {
+        super.onClick(view)
+//        if (view.id == com.dlxk.clone.R.id.titleBackView) {
+//            finish()
+//        }
+    }
+
     /**
      * 创建liveData观察者
      */
@@ -38,7 +48,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
      * 打开等待框
      */
     override fun showLoading(message: String) {
-        //showLoadingExt(message)
+        showLoadingExt(message)
     }
 
     /**
@@ -48,16 +58,17 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
         //dismissLoadingExt()
     }
 
+
     /**
      * 初始化沉浸式状态栏
      */
     protected open fun createStatusBarConfig(): ImmersionBar {
-        return ImmersionBar.with(this) // 默认状态栏字体颜色为黑色
-            .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-            .statusBarColor(R.color.transparency)
+        return ImmersionBar.with(this)
             .statusBarDarkFont(isStatusBarDarkFont()) // 指定导航栏背景颜色
+            .statusBarColor(R.color.white)
             .navigationBarColor(R.color.white) // 状态栏字体和导航栏内容自动变色，必须指定状态栏颜色和导航栏颜色才可以自动变色
             .autoDarkModeEnable(true, 0.2f)
+            .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
     }
 
     /**
