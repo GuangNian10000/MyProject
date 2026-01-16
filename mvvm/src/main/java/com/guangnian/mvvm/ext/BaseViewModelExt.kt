@@ -206,7 +206,7 @@ fun <T> BaseViewModel.requestNoCheck(
     block: suspend () -> T,
     success: (T) -> Unit,
     error: (AppException) -> Unit = {},
-    isShowDialog: Boolean = false,
+    isShowDialog: Boolean = true,
     loadingMessage: String = "under loading..."
 ): Job {
     //如果需要弹窗 通知Activity/fragment弹窗

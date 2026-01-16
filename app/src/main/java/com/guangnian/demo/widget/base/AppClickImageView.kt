@@ -8,11 +8,10 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.Observer
 import com.guangnian.demo.R
-import com.guangnian.demo.app.ext.extractColorFromBackgroundDrawable
 import com.guangnian.demo.app.theme.AppTheme
 import com.guangnian.demo.data.interfaces.OnClickViewState
 import com.guangnian.demo.data.model.bean.BgData
-import com.guangnian.demo.util.AppMK
+import com.guangnian.demo.util.mk.AppMK
 
 /**
  * @author GuangNian

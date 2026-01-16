@@ -13,7 +13,7 @@ import com.guangnian.demo.R
 import com.guangnian.demo.app.ext.extractColorFromBackgroundDrawable
 import com.guangnian.demo.app.theme.AppTheme.appTheme
 import com.guangnian.demo.data.model.bean.BgData
-import com.guangnian.demo.util.AppMK
+import com.guangnian.demo.util.mk.AppMK
 
 /**
  * @author GuangNian

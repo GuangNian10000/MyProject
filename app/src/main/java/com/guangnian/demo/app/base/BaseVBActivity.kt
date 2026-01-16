@@ -34,7 +34,7 @@ abstract class BaseVBActivity<VM : BaseViewModel, VB : ViewBinding> : BaseVmVbAc
 
     override fun onClick(view: View) {
         super.onClick(view)
-//        if (view.id == com.dlxk.clone.R.id.titleBackView) {
+//        if (view.id == com.guangnian.demo.R.id.titleBackView) {
 //            finish()
 //        }
     }

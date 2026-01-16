@@ -70,7 +70,10 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), Activit
             onNetworkStateChanged(it)
         })
         initData()
+        initOnClick()
     }
+
+    abstract fun initOnClick()
 
     /**
      * 初始化布局

@@ -15,14 +15,14 @@ abstract class BaseVmVbActivity<VM : BaseViewModel, VB : ViewBinding> : BaseVmAc
 
     override fun layoutId(): Int = 0
 
-    lateinit var mViewBind: VB
+    lateinit var mVB: VB
 
     /**
      * 创建DataBinding
      */
     override fun initDataBind(): View? {
-        mViewBind = inflateBindingWithGeneric(layoutInflater)
-        return mViewBind.root
+        mVB = inflateBindingWithGeneric(layoutInflater)
+        return mVB.root
 
     }
 }

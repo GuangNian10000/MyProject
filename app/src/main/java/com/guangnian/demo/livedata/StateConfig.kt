@@ -1,5 +1,6 @@
 package com.guangnian.demo.livedata
 
+import com.guangnian.demo.data.model.bean.LoginBean
 import com.guangnian.demo.livedata.StateLiveData.unlive
 
 /**
@@ -12,8 +13,5 @@ import com.guangnian.demo.livedata.StateLiveData.unlive
  *  }
  */
 object StateConfig {
-    var userName: String by unlive("default_name")
-    var userAge: String by unlive("哈哈")
-    // 甚至支持实体对象 (只要能被 Gson 序列化)
-    //var userInfo: UserInfo by unlive(UserInfo())
+    var loginBean: LoginBean by unlive(LoginBean()) //登录信息
 }

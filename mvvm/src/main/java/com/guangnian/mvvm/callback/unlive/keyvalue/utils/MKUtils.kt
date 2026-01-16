@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
 class MKUtils private constructor(spName: String, mode: Int) {
 
     // 直接持有引用，减少每次调用时的判空层级（如果初始化失败，mmkv 为 null，后续调用均安全忽略）
-    private val mmkv: MMKV? = MMKV.mmkvWithID(spName, mode)
+    private val mmkv: MMKV = MMKV.mmkvWithID(spName, mode)
 
     companion object {
         // 使用 ConcurrentHashMap 保证多线程下的 Map 读写安全
@@ -51,48 +51,48 @@ class MKUtils private constructor(spName: String, mode: Int) {
     // isCommit 参数保留以兼容旧接口，但在 MMKV 中无实际意义，使用下划线变量名 _ 表示未被使用
 
     fun put(key: String, value: String, isCommit: Boolean = false) {
-        mmkv?.encode(key, value)
+        mmkv.encode(key, value)
     }
 
     fun put(key: String, value: Int, isCommit: Boolean = false) {
-        mmkv?.encode(key, value)
+        mmkv.encode(key, value)
     }
 
     fun put(key: String, value: Long, isCommit: Boolean = false) {
-        mmkv?.encode(key, value)
+        mmkv.encode(key, value)
     }
 
     fun put(key: String, value: Float, isCommit: Boolean = false) {
-        mmkv?.encode(key, value)
+        mmkv.encode(key, value)
     }
 
     fun put(key: String, value: Boolean, isCommit: Boolean = false) {
-        mmkv?.encode(key, value)
+        mmkv.encode(key, value)
     }
 
     fun put(key: String, value: Set<String>, isCommit: Boolean = false) {
-        mmkv?.encode(key, value)
+        mmkv.encode(key, value)
     }
 
     // ================== 读操作 (Get) ==================
 
     fun getString(key: String, defaultValue: String = ""): String =
-        mmkv?.decodeString(key, defaultValue) ?: defaultValue
+        mmkv.decodeString(key, defaultValue) ?: defaultValue
 
     fun getInt(key: String, defaultValue: Int = -1): Int =
-        mmkv?.decodeInt(key, defaultValue) ?: defaultValue
+        mmkv.decodeInt(key, defaultValue) ?: defaultValue
 
     fun getLong(key: String, defaultValue: Long = -1L): Long =
-        mmkv?.decodeLong(key, defaultValue) ?: defaultValue
+        mmkv.decodeLong(key, defaultValue) ?: defaultValue
 
     fun getFloat(key: String, defaultValue: Float = -1f): Float =
-        mmkv?.decodeFloat(key, defaultValue) ?: defaultValue
+        mmkv.decodeFloat(key, defaultValue) ?: defaultValue
 
     fun getBoolean(key: String, defaultValue: Boolean = false): Boolean =
-        mmkv?.decodeBool(key, defaultValue) ?: defaultValue
+        mmkv.decodeBool(key, defaultValue) ?: defaultValue
 
     fun getStringSet(key: String, defaultValue: Set<String> = emptySet()): Set<String> =
-        mmkv?.decodeStringSet(key, defaultValue) ?: defaultValue
+        mmkv.decodeStringSet(key, defaultValue) ?: defaultValue
 
     // ================== 其他操作 ==================
 
@@ -103,13 +103,13 @@ class MKUtils private constructor(spName: String, mode: Int) {
     val all: Map<String, *>
         get() = emptyMap<String, Any>()
 
-    fun contains(key: String): Boolean = mmkv?.containsKey(key) == true
+    fun contains(key: String): Boolean = mmkv.containsKey(key) == true
 
     fun remove(key: String, isCommit: Boolean = false) {
-        mmkv?.removeValueForKey(key)
+        mmkv.removeValueForKey(key)
     }
 
     fun clear(isCommit: Boolean = false) {
-        mmkv?.clearAll()
+        mmkv.clearAll()
     }
 }

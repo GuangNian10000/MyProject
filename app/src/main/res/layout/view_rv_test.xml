@@ -1,0 +1,15 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="m"
+            type="com.guangnian.demo.data.model.bean.RvTest" />
+    </data>
+
+    <TextView
+        android:id="@+id/tv_simple"
+        android:text="@{String.valueOf(m.name)}"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+</layout>
